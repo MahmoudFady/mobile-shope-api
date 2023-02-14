@@ -21,7 +21,7 @@ const morgan = require("morgan");
 
 // #### custom middleware
 
-const dbConnection = require("./middleware/dbConnection");
+const dbConnection = require("./config/dbConnection");
 
 // #### custom middleware
 
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET , POST , UPDATE , DELETE , PATCH"
+    "GET , POST , UPDATE , DELETE , PATCH , DELETE"
   );
   next();
 });
@@ -63,11 +63,10 @@ dbConnection();
 
 // +++++++++++++++++++++++++
 // #### app routes
-app.use("/user", userRoutes);
-app.use("/product", productRoutes);
-app.use("/comment", commentRoutes);
-app.use("/cart", cartRoutes);
-
+app.use("/api/user", userRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/comment", commentRoutes);
+app.use("/api/cart", cartRoutes);
 // #### app routes
 // +++++++++++++++++++++++++
 

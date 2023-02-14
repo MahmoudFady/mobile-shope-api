@@ -1,66 +1,34 @@
-const User = require("../model/user");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const JWT_KEY = process.env.JWT_KEY;
+const userUseCase = require("../use-case/user");
 module.exports.signup = async (req, res, next) => {
-  const { name, email, phone, country, state, city, password } = req.body;
-  const user = await User.findOne({ email });
-  if (user) {
-    res.status(409).json({ message: "email already exist" });
+  try {
+    console.log(req.body);
+    const { message, user, token } = await userUseCase.signup(req.body);
+    if (!user || !token) return res.status(404).json({ message });
+    res.status(200).json({ message, user, token });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-  const hash = await bcrypt.hash(password, 10);
-  const newUser = await new User({
-    name,
-    email,
-    phone,
-    address: {
-      country,
-      state,
-      city,
-    },
-    password: hash,
-  }).save();
-  const token = jwt.sign(
-    { userId: newUser._id, email: newUser.email },
-    JWT_KEY
-  );
-  res
-    .status(200)
-    .json({ message: "user successfully signup", user: newUser, token });
 };
 module.exports.signin = async (req, res, next) => {
-  console.log("sigin works");
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (user) {
-    const isPasswordSame = await bcrypt.compare(password, user.password);
-    if (isPasswordSame) {
-      const token = jwt.sign({ userId: user._id, email: user.email }, JWT_KEY);
-      res.status(200).json({
-        messsage: "user successfully signin",
-        user,
-        token,
-      });
-    } else {
-      res.status(404).json({
-        message: "email or password invalid",
-      });
-    }
-  } else {
-    res.status(404).json({
-      message: "login faild",
+  try {
+    const { message, user, token } = await userUseCase.signin(req.body);
+    if (!user || !token) return res.status(404).json({ message });
+    res.status(200).json({
+      message,
+      user,
+      token,
     });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
-module.exports.profile = async (req, res, next) => {
-  const { userId } = req.params;
-  const user = await User.findOne({ _id: userId }).select("-password");
-  res.status(200).json({
-    user,
-  });
-};
-module.exports.edit = (decode, req, res, next) => {
-  res.status(200).json({
-    message: "user updated !",
-  });
+module.exports.profile = async (decode, req, res, next) => {
+  try {
+    const user = await userUseCase.getProfile(decode.userId);
+    res.status(200).json({
+      user,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
