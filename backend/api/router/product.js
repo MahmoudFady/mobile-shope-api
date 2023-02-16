@@ -1,17 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const checkAuth = require("../../middleware/checkAuth");
 const upload = require("../../middleware/upload");
 const {
-  getAllProducts,
-  addProduct,
+  getByPagination,
+  create,
   getProductById,
-  getProductsByCategory,
-  search,
+  getByCategory,
+  getBySearch,
 } = require("../controller/product");
-router.get("/", getAllProducts);
-router.post("/", upload().array("images", 5), checkAuth, addProduct);
-router.get("/search/:category/:brand", search);
-router.get("/category/:category", getProductsByCategory);
-router.get("/:productId", getProductById);
+router.get("/", getByPagination);
+router.post(
+  "/",
+  upload.fields([
+    { name: "thumbnail", maxCount: 1 },
+    { name: "images", maxCount: 10 },
+  ]),
+  create
+);
+router.get("/search", getBySearch);
+router.get("/category/:category", getByCategory);
+router.get("/:id", getProductById);
 module.exports = router;

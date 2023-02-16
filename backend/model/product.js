@@ -1,41 +1,26 @@
 const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema({
-  category: {
-    type: String,
-    required: true,
-  },
-  brand: {
-    type: String,
-    required: true,
-  },
-  model: {
-    type: String,
-    required: true,
-  },
+  category: String,
+  brand: String,
+  model: String,
+  thumbnail: String,
   images: Array,
-  describtion: {
-    type: String,
-    required: true,
-  },
-  properties: {
-    color: String,
-    size: String,
-    storage: String,
-    ram: String,
+  describtion: String,
+  price: Number,
+  discount: Number,
+  count: Number,
+  details: {
     processor: String,
+    screen: {
+      size: String,
+      type: String,
+    },
+    storage: {
+      room: String,
+      ram: String,
+    },
+    color: String,
     battery: String,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  discount: {
-    type: Number,
-  },
-  count: {
-    type: Number,
-    required: true,
-    defualt: 0,
   },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 });
