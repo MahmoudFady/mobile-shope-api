@@ -1,5 +1,5 @@
-const Comment = require("../model/comment");
-const Product = require("../model/product");
+const Comment = require("../../model/comment");
+const Product = require("../../model/product");
 module.exports.addComment = async (decode, req, res, next) => {
   console.log("addcoment");
   const { productId } = req.params;

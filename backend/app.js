@@ -3,10 +3,10 @@ const path = require("path");
 const app = express();
 
 // #### routes src
-const userRoutes = require("./router/user");
-const productRoutes = require("./router/product");
-const commentRoutes = require("./router/comment");
-const cartRoutes = require("./router/cart");
+const userRoutes = require("./api/router/user");
+const productRoutes = require("./api/router/product");
+const commentRoutes = require("./api/router/comment");
+const cartRoutes = require("./api/router/cart");
 
 // #### routes src
 // ++++++++++++++++++

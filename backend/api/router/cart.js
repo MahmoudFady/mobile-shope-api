@@ -9,7 +9,7 @@ const {
   getCartForUnAuthUser,
   getCartProductCount,
 } = require("../controller/cart");
-const checkAuth = require("../middleware/checkAuth");
+const checkAuth = require("../../middleware/checkAuth");
 router.get("/", getAllCarts);
 router.get("/productCount", checkAuth, getCartProductCount);
 router.post("/unAuth", getCartForUnAuthUser);

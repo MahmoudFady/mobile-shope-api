@@ -1,8 +1,8 @@
 function calcPrice(price, discount) {
   return price - price * (discount / 100);
 }
-const Cart = require("../model/cart");
-const Product = require("../model/product");
+const Cart = require("../../model/cart");
+const Product = require("../../model/product");
 module.exports.getAllCarts = async (req, res, next) => {
   const carts = await Cart.find();
   res.status(200).json({

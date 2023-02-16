@@ -1,4 +1,4 @@
-const userUseCase = require("../use-case/user");
+const userUseCase = require("../../use-case/user");
 module.exports.signup = async (req, res, next) => {
   try {
     console.log(req.body);
