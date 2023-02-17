@@ -33,3 +33,11 @@ module.exports.updateOneById = (id, updatedData) => {
     }
   ).select("-comments");
 };
+module.exports.updateProductComments = (productId, commentId) => {
+  return Product.updateOne(
+    { _id: productId },
+    {
+      $push: { comments: commentId },
+    }
+  );
+};
