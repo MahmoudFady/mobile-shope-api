@@ -1,5 +1,6 @@
 const productDbAccess = require("../db-access/product");
 const fileHelper = require("../helpers/file");
+const productHelper = require("../helpers/product");
 module.exports.create = (req) => {
   let {
     category,
@@ -47,9 +48,20 @@ module.exports.getByPagination = async (query) => {
 };
 module.exports.getBySearch = (query) => {
   const target = query.target;
+  const minPrice = +query.minPrice || 1;
+  const maxPrice = +query.maxPrice || 10000;
   const taregtReqExp = new RegExp(target, "i");
-  return productDbAccess.getBySearch(taregtReqExp);
+  const searchCriteria = productHelper.getSearchCriteria(taregtReqExp, {
+    minPrice,
+    maxPrice,
+  });
+  return productDbAccess.getBySearch(searchCriteria);
 };
-module.exports.getByCategory = (category) => {
-  return productDbAccess.getByCategory(category);
+module.exports.getByCategory = (category) =>
+  productDbAccess.getByCategory(category);
+module.exports.deleteOneById = (id) => productDbAccess.deleteOneById(id);
+module.exports.updateOneById = (req) => {
+  const { id } = req.params;
+  const { updatedData } = req.body;
+  return productDbAccess.updateOneById(id, updatedData);
 };

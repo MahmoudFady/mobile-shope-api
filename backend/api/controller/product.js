@@ -32,7 +32,7 @@ module.exports.getByCategory = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports.getProductById = async (req, res, next) => {
+module.exports.getOneById = async (req, res, next) => {
   try {
     const product = await productUseCase.getOneById(req.params.id);
     res.status(200).json({
@@ -50,6 +50,28 @@ module.exports.getBySearch = async (req, res, next) => {
       message: "get product by search",
       length: products.length,
       products,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+module.exports.deleteOneById = async (req, res, next) => {
+  try {
+    const deletedProudct = await productUseCase.deleteOneById(req.params["id"]);
+    res.status(200).json({
+      message: "product deleted",
+      deletedProudct,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+module.exports.updateOneById = async (req, res, next) => {
+  try {
+    const updatedProduct = await productUseCase.updateOneById(req);
+    res.status(200).json({
+      message: "product updated",
+      updatedProduct,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

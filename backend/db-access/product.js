@@ -9,25 +9,27 @@ module.exports.getByPagination = async (skip, limit) => {
     .select("-details -comments -images");
   return { productCount, products };
 };
-module.exports.getBySearch = (targetRexExp) => {
-  const searchCriteria = [
-    {
-      category: { $regex: targetRexExp },
-    },
-    {
-      brand: { $regex: targetRexExp },
-    },
-    {
-      describtion: { $regex: targetRexExp },
-    },
-    {
-      model: { $regex: targetRexExp },
-    },
-  ];
+module.exports.getBySearch = (criteria) => {
+  const { priceCriteria, targetCriteria } = criteria;
   return Product.find({
-    $or: searchCriteria,
+    $or: targetCriteria,
+    $and: priceCriteria,
   }).select("-details -comments -images");
 };
 module.exports.getByCategory = (category) => {
   return Product.find({ category }).select("-details -comments -images");
+};
+module.exports.deleteOneById = (id) => Product.findByIdAndDelete(id);
+module.exports.updateOneById = (id, updatedData) => {
+  return Product.findByIdAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      $set: updatedData,
+    },
+    {
+      new: true,
+    }
+  ).select("-comments");
 };
