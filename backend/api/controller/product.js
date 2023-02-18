@@ -1,6 +1,5 @@
-const Product = require("../../model/product");
 const productUseCase = require("../../use-case/product");
-module.exports.getByPagination = async (req, res, next) => {
+module.exports.getByPagination = async (req, res) => {
   try {
     const data = await productUseCase.getByPagination(req.query);
     res.status(200).json({ message: "get all products", ...data });
@@ -8,7 +7,7 @@ module.exports.getByPagination = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports.create = async (req, res, next) => {
+module.exports.create = async (req, res) => {
   try {
     const product = await productUseCase.create(req);
     res.status(200).json({
@@ -19,7 +18,7 @@ module.exports.create = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports.getByCategory = async (req, res, next) => {
+module.exports.getByCategory = async (req, res) => {
   try {
     const category = req.params["category"];
     const products = await productUseCase.getByCategory(category);
@@ -32,7 +31,7 @@ module.exports.getByCategory = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports.getOneById = async (req, res, next) => {
+module.exports.getOneById = async (req, res) => {
   try {
     const product = await productUseCase.getOneById(req.params.id);
     res.status(200).json({
@@ -43,7 +42,7 @@ module.exports.getOneById = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports.getBySearch = async (req, res, next) => {
+module.exports.getBySearch = async (req, res) => {
   try {
     const products = await productUseCase.getBySearch(req.query);
     res.status(200).json({
@@ -55,7 +54,7 @@ module.exports.getBySearch = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports.deleteOneById = async (req, res, next) => {
+module.exports.deleteOneById = async (req, res) => {
   try {
     const deletedProudct = await productUseCase.deleteOneById(req.params["id"]);
     res.status(200).json({
@@ -66,7 +65,7 @@ module.exports.deleteOneById = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports.updateOneById = async (req, res, next) => {
+module.exports.updateOneById = async (req, res) => {
   try {
     const updatedProduct = await productUseCase.updateOneById(req);
     res.status(200).json({
