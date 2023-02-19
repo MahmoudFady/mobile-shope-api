@@ -16,8 +16,6 @@ module.exports.create = (req) => {
   } = req.body;
   thumbnail = fileHelper.getSingleUploadFilePath(req);
   images = fileHelper.getMultiUploadFilesPath(req);
-  console.log(thumbnail);
-  console.log(images);
   data = {
     category,
     brand,
