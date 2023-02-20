@@ -8,6 +8,7 @@ const productRoutes = require("./api/router/product");
 const commentRoutes = require("./api/router/comment");
 const cartRoutes = require("./api/router/cart");
 const orderRoutes = require("./api/router/order");
+const categoryRoutes = require("./api/router/category");
 
 // #### routes src
 // ++++++++++++++++++
@@ -69,7 +70,13 @@ app.use("/api/product", productRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
+app.use("/api/category", categoryRoutes);
 
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: "un found api request",
+  });
+});
 // #### app routes
 // +++++++++++++++++++++++++
 
