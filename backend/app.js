@@ -7,6 +7,7 @@ const userRoutes = require("./api/router/user");
 const productRoutes = require("./api/router/product");
 const commentRoutes = require("./api/router/comment");
 const cartRoutes = require("./api/router/cart");
+const orderRoutes = require("./api/router/order");
 
 // #### routes src
 // ++++++++++++++++++
@@ -67,6 +68,8 @@ app.use("/api/user", userRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/order", orderRoutes);
+
 // #### app routes
 // +++++++++++++++++++++++++
 

@@ -20,7 +20,7 @@ module.exports.getCartByUserId = (userId) => {
   return Cart.findOne({ user: userId }).populate(cartPopulateOptions);
 };
 module.exports.deleteCartByUserId = (userId) => {
-  return Cart.deleteOne({ user: userId });
+  return Cart.findOneAndDelete({ user: userId });
 };
 module.exports.pushProduct = (userId, productId, price) => {
   return Cart.updateOne(
