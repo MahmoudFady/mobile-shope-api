@@ -1,7 +1,6 @@
 const userUseCase = require("../../use-case/user");
 module.exports.signup = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { message, user, token } = await userUseCase.signup(req.body);
     if (!user || !token) return res.status(404).json({ message });
     res.status(200).json({ message, user, token });
